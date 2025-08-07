@@ -1,64 +1,64 @@
-erDiagram
-    USER ||--o{ APPOINTMENT : makes
-    USER ||--o{ CONSULTATION : requests
-    USER ||--o{ TEST_RESULT : receives
-    USER ||--o{ TREATMENT : undergoes
-    USER ||--o{ NOTIFICATION : receives
-    DOCTOR ||--o{ SCHEDULE : manages
-    DOCTOR ||--o{ CONSULTATION : gives
-
-    APPOINTMENT {
-        string id
-        datetime appointmentDate
-        string location
-        string status
+classDiagram
+    class User {
+        +String id
+        +String name
+        +String email
+        +String password
+        +String role
+        +Date dob
     }
 
-    TEST_RESULT {
-        string id
-        string type
-        float value
-        date resultDate
+    class Appointment {
+        +String id
+        +Date appointmentDate
+        +String location
+        +String status
     }
 
-    TREATMENT {
-        string id
-        string regimen
-        date startDate
-        string note
+    class Doctor {
+        +String id
+        +String specialization
+        +String licenseNumber
     }
 
-    SCHEDULE {
-        string id
-        date workDate
-        string shift
+    class TestResult {
+        +String id
+        +String type
+        +Float value
+        +Date resultDate
     }
 
-    CONSULTATION {
-        string id
-        datetime time
-        string topic
-        string status
+    class Treatment {
+        +String id
+        +String regimen
+        +Date startDate
+        +String note
     }
 
-    NOTIFICATION {
-        string id
-        string message
-        date sendDate
-        boolean read
+    class Schedule {
+        +String id
+        +Date workDate
+        +String shift
     }
 
-    USER {
-        string id
-        string name
-        string email
-        string password
-        string role
-        date dob
+    class Consultation {
+        +String id
+        +DateTime time
+        +String topic
+        +String status
     }
 
-    DOCTOR {
-        string id
-        string specialization
-        string licenseNumber
+    class Notification {
+        +String id
+        +String message
+        +Date sendDate
+        +Boolean read
     }
+
+    User --> Appointment
+    User --> Consultation
+    User --> TestResult
+    User --> Treatment
+    User --> Notification
+    Doctor --> Schedule
+    Doctor --> Consultation
