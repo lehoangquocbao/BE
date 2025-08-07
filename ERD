@@ -1,0 +1,64 @@
+erDiagram
+    USER ||--o{ APPOINTMENT : makes
+    USER ||--o{ CONSULTATION : requests
+    USER ||--o{ TEST_RESULT : receives
+    USER ||--o{ TREATMENT : undergoes
+    USER ||--o{ NOTIFICATION : receives
+    DOCTOR ||--o{ SCHEDULE : manages
+    DOCTOR ||--o{ CONSULTATION : gives
+
+    APPOINTMENT {
+        string id
+        datetime appointmentDate
+        string location
+        string status
+    }
+
+    TEST_RESULT {
+        string id
+        string type
+        float value
+        date resultDate
+    }
+
+    TREATMENT {
+        string id
+        string regimen
+        date startDate
+        string note
+    }
+
+    SCHEDULE {
+        string id
+        date workDate
+        string shift
+    }
+
+    CONSULTATION {
+        string id
+        datetime time
+        string topic
+        string status
+    }
+
+    NOTIFICATION {
+        string id
+        string message
+        date sendDate
+        boolean read
+    }
+
+    USER {
+        string id
+        string name
+        string email
+        string password
+        string role
+        date dob
+    }
+
+    DOCTOR {
+        string id
+        string specialization
+        string licenseNumber
+    }
