@@ -1,67 +1,67 @@
-# 📘 Sơ đồ ERD (HIV Treatment System)
+# 🗂️ Sơ đồ ERD - Hệ thống quản lý điều trị HIV
 
 ```mermaid
 classDiagram
-    class User {
+    class NguoiDung {
         +String id
-        +String name
+        +String hoTen
         +String email
-        +String password
-        +String role
-        +Date dob
+        +String matKhau
+        +String vaiTro
+        +Date ngaySinh
     }
 
-    class Appointment {
+    class LichHen {
         +String id
-        +Date appointmentDate
-        +String location
-        +String status
+        +Date ngayHen
+        +String diaDiem
+        +String trangThai
     }
 
-    class Doctor {
+    class BacSi {
         +String id
-        +String specialization
-        +String licenseNumber
+        +String chuyenKhoa
+        +String maSoHanhNghe
     }
 
-    class TestResult {
+    class XetNghiem {
         +String id
-        +String type
-        +Float value
-        +Date resultDate
+        +String loai
+        +Float giaTri
+        +Date ngayTraKetQua
     }
 
-    class Treatment {
+    class DieuTri {
         +String id
-        +String regimen
-        +Date startDate
-        +String note
+        +String phacDo
+        +Date ngayBatDau
+        +String ghiChu
     }
 
-    class Schedule {
+    class LichLamViec {
         +String id
-        +Date workDate
-        +String shift
+        +Date ngayLam
+        +String caTruc
     }
 
-    class Consultation {
+    class TuVan {
         +String id
-        +DateTime time
-        +String topic
-        +String status
+        +DateTime thoiGian
+        +String chuDe
+        +String trangThai
     }
 
-    class Notification {
+    class ThongBao {
         +String id
-        +String message
-        +Date sendDate
-        +Boolean read
+        +String noiDung
+        +Date ngayGui
+        +Boolean daDoc
     }
 
-    User --> Appointment
-    User --> Consultation
-    User --> TestResult
-    User --> Treatment
-    User --> Notification
-    Doctor --> Schedule
-    Doctor --> Consultation
+    NguoiDung --> LichHen
+    NguoiDung --> TuVan
+    NguoiDung --> XetNghiem
+    NguoiDung --> DieuTri
+    NguoiDung --> ThongBao
+    BacSi --> LichLamViec
+    BacSi --> TuVan
