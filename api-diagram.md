@@ -1,60 +1,53 @@
 graph TD
-  subgraph VaiTro
-    guest[Khách]
-    user[Nguoi_dung]
-    staff[Nhan_vien]
-    doctor[Bac_si]
-    manager[Quan_ly]
-    admin[Quan_tri_vien]
-  end
 
-  subgraph API_CongKhai
-    A1[GET /thong-tin/co-so-y-te] --> guest
-    A2[GET /thong-tin/tai-lieu-giao-duc] --> guest
-    A3[GET /thong-tin/blog-kinh-nghiem] --> guest
-  end
+%% Vai trò người dùng
+  guest["Khách"]
+  customer["Người dùng"]
+  staff["Nhân viên"]
+  doctor["Bác sĩ"]
+  manager["Quản lý"]
+  admin["Quản trị viên"]
 
-  subgraph API_XacThuc
-    B1[POST /dang-ky] --> user
-    B2[POST /dang-nhap] --> user
-  end
+%% API công khai
+  api1["GET /thong-tin/co-so-y-te"] --> guest
+  api2["GET /thong-tin/tai-lieu-giao-duc"] --> guest
+  api3["GET /thong-tin/blog-kinh-nghiem"] --> guest
 
-  subgraph API_NguoiDung
-    C1[GET /lich-hen] --> user
-    C2[POST /dat-lich-hen] --> user
-    C3[GET /ket-qua-xet-nghiem] --> user
-    C4[GET /phac-do-dieu-tri] --> user
-    C5[GET /bang-dieu-khien] --> user
-  end
+%% API xác thực
+  api4["POST /dang-ky"] --> customer
+  api5["POST /dang-nhap"] --> customer
 
-  subgraph API_BacSi
-    D1[GET /benh-nhan] --> doctor
-    D2[GET /benh-nhan/:id/xet-nghiem] --> doctor
-    D3[POST /benh-nhan/:id/phac-do] --> doctor
-    D4[POST /lich-tu-van] --> doctor
-  end
+%% API người dùng
+  api6["GET /lich-hen"] --> customer
+  api7["POST /dat-lich-hen"] --> customer
+  api8["GET /ket-qua-xet-nghiem"] --> customer
+  api9["GET /phac-do-dieu-tri"] --> customer
+  api10["GET /bang-dieu-khien"] --> customer
 
-  subgraph API_QuanLy
-    E1[GET /nhan-vien] --> manager
-    E2[POST /them-nhan-vien] --> manager
-    E3[GET /bao-cao/tong-quan] --> manager
-  end
+%% API bác sĩ
+  api11["GET /benh-nhan"] --> doctor
+  api12["GET /benh-nhan/:id/xet-nghiem"] --> doctor
+  api13["POST /benh-nhan/:id/phac-do"] --> doctor
+  api14["POST /lich-tu-van"] --> doctor
 
-  subgraph API_QuanTriVien
-    F1[GET /nguoi-dung] --> admin
-    F2[POST /cap-quyen/:id] --> admin
-    F3[GET /cau-hinh-he-thong] --> admin
-  end
+%% API quản lý
+  api15["GET /nhan-vien"] --> manager
+  api16["POST /them-nhan-vien"] --> manager
+  api17["GET /bao-cao/tong-quan"] --> manager
 
-  subgraph API_Chung
-    G1[GET /bang-dieu-khien] --> staff
-    G1 --> doctor
-    G1 --> manager
-    G1 --> admin
+%% API quản trị viên
+  api18["GET /nguoi-dung"] --> admin
+  api19["POST /cap-quyen/:id"] --> admin
+  api20["GET /cau-hinh-he-thong"] --> admin
 
-    G2[GET /thuoc] --> doctor
-    G2 --> staff
+%% API chung
+  api21["GET /bang-dieu-khien"] --> staff
+  api21 --> doctor
+  api21 --> manager
+  api21 --> admin
 
-    G3[GET /lich-lam-viec] --> doctor
-    G3 --> staff
-  end
+  api22["GET /thuoc"] --> doctor
+  api22 --> staff
+
+  api23["GET /lich-lam-viec"] --> doctor
+  api23 --> staff
