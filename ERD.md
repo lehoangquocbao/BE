@@ -1,3 +1,6 @@
+# 📘 Sơ đồ ERD (HIV Treatment System)
+
+```mermaid
 classDiagram
     class User {
         +String id
