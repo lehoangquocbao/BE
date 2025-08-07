@@ -1,57 +1,10 @@
-# 📌 Sơ đồ API hệ thống điều trị HIV
+### 📋 Bảng so sánh thành phần hệ thống HIV Treatment & Medical Services System
 
-```mermaid
-graph TD
-
-%% Vai trò người dùng
-  guest["Khách"]
-  customer["Người dùng"]
-  staff["Nhân viên"]
-  doctor["Bác sĩ"]
-  manager["Quản lý"]
-  admin["Quản trị viên"]
-
-%% API công khai
-  api1["GET /thong-tin/co-so-y-te"] --> guest
-  api2["GET /thong-tin/tai-lieu-giao-duc"] --> guest
-  api3["GET /thong-tin/blog-kinh-nghiem"] --> guest
-
-%% API xác thực
-  api4["POST /dang-ky"] --> customer
-  api5["POST /dang-nhap"] --> customer
-
-%% API người dùng
-  api6["GET /lich-hen"] --> customer
-  api7["POST /dat-lich-hen"] --> customer
-  api8["GET /ket-qua-xet-nghiem"] --> customer
-  api9["GET /phac-do-dieu-tri"] --> customer
-  api10["GET /bang-dieu-khien"] --> customer
-
-%% API bác sĩ
-  api11["GET /benh-nhan"] --> doctor
-  api12["GET /benh-nhan/:id/xet-nghiem"] --> doctor
-  api13["POST /benh-nhan/:id/phac-do"] --> doctor
-  api14["POST /lich-tu-van"] --> doctor
-
-%% API quản lý
-  api15["GET /nhan-vien"] --> manager
-  api16["POST /them-nhan-vien"] --> manager
-  api17["GET /bao-cao/tong-quan"] --> manager
-
-%% API quản trị viên
-  api18["GET /nguoi-dung"] --> admin
-  api19["POST /cap-quyen/:id"] --> admin
-  api20["GET /cau-hinh-he-thong"] --> admin
-
-%% API chung
-  api21["GET /bang-dieu-khien"] --> staff
-  api21 --> doctor
-  api21 --> manager
-  api21 --> admin
-
-  api22["GET /thuoc"] --> doctor
-  api22 --> staff
-
-  api23["GET /lich-lam-viec"] --> doctor
-  api23 --> staff
-```
+| Thành phần   | Mô tả chức năng chính                                                                 | Đối tượng sử dụng                     | Dữ liệu sử dụng                            | Ghi chú thêm                                               |
+|--------------|----------------------------------------------------------------------------------------|----------------------------------------|--------------------------------------------|-------------------------------------------------------------|
+| **Guest**     | Xem thông tin cơ sở y tế, tài liệu giáo dục, blog chia sẻ kinh nghiệm                 | Bệnh nhân mới, người chưa đăng ký      | Nội dung tĩnh, bài viết, tài liệu giới thiệu| Không cần đăng nhập                                        |
+| **Customer**  | Đăng ký tài khoản, đặt lịch hẹn, xem kết quả xét nghiệm, theo dõi phác đồ             | Bệnh nhân HIV                          | Hồ sơ cá nhân, lịch sử điều trị             | Cần đăng ký, xác thực                                       |
+| **Staff**     | Hỗ trợ khám bệnh, nhập dữ liệu xét nghiệm, quản lý thuốc                             | Nhân viên y tế hỗ trợ                  | Dữ liệu khám bệnh, thông tin thuốc          | Truy cập giới hạn, thao tác nội bộ                          |
+| **Doctor**    | Chỉ định phác đồ điều trị, theo dõi tiến trình, tùy chỉnh thuốc ARV cho từng bệnh nhân| Bác sĩ chuyên khoa                     | Kết quả xét nghiệm, phác đồ cá nhân hóa     | Có quyền điều chỉnh phác đồ, xem lịch làm việc             |
+| **Manager**   | Quản lý nhân viên, phân công công việc, xem báo cáo tổng quan                         | Quản lý y tế                           | Dữ liệu nhân sự, thống kê                   | Xem báo cáo tổng hợp, phân tích hiệu suất                  |
+| **Admin**     | Cấu hình hệ thống, phân quyền người dùng, giám sát toàn bộ hệ thống                   | Quản trị viên hệ thống                 | Người dùng, phân quyền, thiết lập hệ thống  | Có toàn quyền trong hệ thống                               |
