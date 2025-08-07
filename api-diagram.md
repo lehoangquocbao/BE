@@ -1,3 +1,6 @@
+# 📌 Sơ đồ API hệ thống điều trị HIV
+
+```mermaid
 graph TD
 
 %% Vai trò người dùng
@@ -51,3 +54,4 @@ graph TD
 
   api23["GET /lich-lam-viec"] --> doctor
   api23 --> staff
+```
