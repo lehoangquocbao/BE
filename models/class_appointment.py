@@ -5,5 +5,3 @@ class appointment:
         self.doctor_name=doctor_name
         self.appointment_time=appointment_time
         self.status=status
-
-appointment=[]

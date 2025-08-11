@@ -1,7 +1,20 @@
 from db_connection import connect_db
-from models.appointment import Appointment
+from models.class_appointment import appointment
+from flask import Blueprint, request, jsonify
 
-def insert_appointment(appointment: Appointment):
+appointment_hp=Blueprint('appointment',__name__)
+@appointment_hp.route('/appointment', methods=['POST'])
+def appointment():
+    data=request.get_json()
+    appointment=Appointment(
+        id=data['id'],
+        user_id=data['user_id'],
+        doctor_name=data['doctor_name'],
+        appointment_time=data['appointment_time'],
+        status=data['status']
+
+    )
+
     conn = connect_db()
     cursor = conn.cursor()
     cursor.execute('''

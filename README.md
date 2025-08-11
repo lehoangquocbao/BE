@@ -5,7 +5,7 @@ Các chức năng:
 - Đặt lịch hẹn
 - Hủy và xác nhận lịch hẹn 
 - Gửi nhắc nhở tái khám và uống thuốc
-- Hỗ trợ đặt lịch ẩn danh bằng JWT token đặc biêyj
+- Hỗ trợ đặt lịch ẩn danh bằng JWT token đặc biệt
 
 Ngôn ngữ: Python
 Database: SQlite
