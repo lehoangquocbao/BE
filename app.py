@@ -1,12 +1,11 @@
+
 from flask import Flask
 from models.class_appointment import db
+from db_sqlserver import init_sqlserver
 from appointment_api import appointment_bp
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///your_database.db'  # hoặc URI phù hợp với bạn
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db.init_app(app)
+init_sqlserver(app)
 app.register_blueprint(appointment_bp)
 
 if __name__ == '__main__':

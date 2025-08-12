@@ -15,10 +15,10 @@ class Doctor(db.Model):
     __tablename__ = 'doctors'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(100), nullable=False)
-    specialty = db.Column(db.String(100), nullable=False)
+    specialty = db.Column(db.String(100), nullable=False) # chuyên khoa
     email = db.Column(db.String(120), unique=True, nullable=False)
     phone = db.Column(db.String(20), nullable=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow) 
     # appointments = db.relationship('Appointment', backref='doctor', lazy=True)  # Đã có backref ở Appointment
 
 class Appointment(db.Model):
