@@ -1,4 +1,3 @@
-
 from models.class_appointment import db
 
 # Hàm khởi tạo kết nối SQL Server cho Flask app
