@@ -63,23 +63,24 @@ class MedicalRecord:
         self.notes = notes
         self.visit_date = visit_date # ngày khám bệnh
 
-    class ARVProtocol:
-        def __init__(self, id, code, name, description, for_group, created_at):
-            self.id = id
-            self.code = code
-            self.name = name
-            self.description = description # mô tả phác đồ
-            self.for_group = for_group # nhóm bệnh nhân áp dụng phác đồ này
-            self.created_at = created_at
+    # ...existing code...
 
+class ARVProtocol:
+    def __init__(self, id, code, name, description, for_group, created_at):
+        self.id = id
+        self.code = code
+        self.name = name
+        self.description = description # mô tả phác đồ
+        self.for_group = for_group # nhóm bệnh nhân áp dụng phác đồ này
+        self.created_at = created_at
 class TreatmentHistory:
-    def __init__(self, id, patient_id, arv_protocol, doctor_id, start_date, end_date, docrtor_id, notes):
+    def __init__(self, id, patient_id, arv_protocol, doctor_id, start_date, end_date, notes):
         self.id = id
         self.patient_id = patient_id
         self.arv_protocol = arv_protocol # chứa thông tin về phác đồ ARV
         self.doctor_id = doctor_id
         self.start_date = start_date # ngày bắt đầu điều trị
         self.end_date = end_date # ngày kết thúc điều trị
-        self.notes = notes  
+        self.notes = notes
 
     
