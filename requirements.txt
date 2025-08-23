@@ -1,0 +1,10 @@
+Flask
+Flask-Cors
+Flask-SQLAlchemy
+SQLAlchemy
+pyodbc
+python-dotenv
+bcrypt
+marshmallow
+Flask-JWT-Extended
+gunicorn
