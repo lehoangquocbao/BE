@@ -1,76 +1,55 @@
 from flask import Blueprint, request, jsonify
-from models import db, User
-from flask_bcrypt import Bcrypt
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from models import db
+from models.class_appointment import User, Role
+from utils.validation import require_fields
+from utils.security import hash_password, verify_password, generate_token, token_required, roles_required
 
 auth_bp = Blueprint("auth", __name__)
-bcrypt = Bcrypt()
 
-# ----------------------
-# Đăng ký
-# ----------------------
-@auth_bp.route("/register", methods=["POST"])
+@auth_bp.post("/register")
 def register():
-    data = request.get_json()
-    username = data.get("username")
-    password = data.get("password")
+    data = request.get_json(force=True, silent=True) or {}
+    err = require_fields(data, ["username", "password"])
+    if err: return err
 
-    if User.query.filter_by(username=username).first():
-        return jsonify({"msg": "User already exists"}), 400
+    username = data["username"].strip()
+    if db.session.query(User).filter_by(username=username).first():
+        return jsonify({"error": "Username already exists"}), 409
 
-    hashed_pw = bcrypt.generate_password_hash(password).decode("utf-8")
-    new_user = User(username=username, password=hashed_pw)
-    db.session.add(new_user)
+    # kiểm tra role hợp lệ, nếu không thì gán mặc định CUSTOMER
+    role = Role(data.get("role")) if data.get("role") in [r.value for r in Role] else Role.CUSTOMER
+
+    user = User(
+        username=username,
+        email=data.get("email"),
+        full_name=data.get("full_name"),
+        password_hash=hash_password(data["password"]),
+        role=role
+    )
+    db.session.add(user)
     db.session.commit()
+    return jsonify({"message": "Registered", "user": user.to_safe_dict()}), 201
 
-    return jsonify({"msg": "User registered successfully"}), 201
-
-
-# ----------------------
-# Đăng nhập
-# ----------------------
-@auth_bp.route("/login", methods=["POST"])
+@auth_bp.post("/login")
 def login():
-    data = request.get_json()
-    username = data.get("username")
-    password = data.get("password")
+    data = request.get_json(force=True, silent=True) or {}
+    err = require_fields(data, ["username", "password"])
+    if err: return err
 
-    user = User.query.filter_by(username=username).first()
-    if not user or not bcrypt.check_password_hash(user.password, password):
-        return jsonify({"msg": "Invalid username or password"}), 401
+    user = db.session.query(User).filter_by(username=data["username"]).first()
+    if not user or not verify_password(user.password_hash, data["password"]):
+        return jsonify({"error": "Invalid credentials"}), 401
 
-    token = create_access_token(identity=user.id)
-    return jsonify({"access_token": token}), 200
+    token = generate_token(user)
+    return jsonify({"token": token, "user": user.to_safe_dict()})
 
+@auth_bp.get("/me")
+@token_required
+def me():
+    return jsonify({"user": request.user.to_safe_dict()})
 
-# ----------------------
-# Lấy thông tin user hiện tại
-# ----------------------
-@auth_bp.route("/users/me", methods=["GET"])
-@jwt_required()
-def get_user():
-    user_id = get_jwt_identity()
-    user = User.query.get(user_id)
-    return jsonify({
-        "id": user.id,
-        "username": user.username
-    })
-
-
-# ----------------------
-# Cập nhật thông tin user hiện tại
-# ----------------------
-@auth_bp.route("/users/me", methods=["PUT"])
-@jwt_required()
-def update_user():
-    user_id = get_jwt_identity()
-    user = User.query.get(user_id)
-    data = request.get_json()
-
-    if "username" in data:
-        user.username = data["username"]
-    if "password" in data:
-        user.password = bcrypt.generate_password_hash(data["password"]).decode("utf-8")
-
-    db.session.commit()
-    return jsonify({"msg": "User updated successfully"})
+# Ví dụ: endpoint chỉ Admin dùng
+@auth_bp.get("/admin-only")
+@roles_required(Role.ADMIN)
+def admin_only():
+    return jsonify({"message": "Hello Admin"})

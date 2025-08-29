@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 Flask
 Flask-Cors
 Flask-SQLAlchemy
@@ -8,3 +9,5 @@ bcrypt
 marshmallow
 Flask-JWT-Extended
 gunicorn
+PyJWT
+APScheduler
