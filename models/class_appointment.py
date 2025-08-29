@@ -1,9 +1,15 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-
+import enum
 db = SQLAlchemy()
 
 # --- BE DEV1 ---
+class Role(enum.Enum):
+    ADMIN = "admin"
+    DOCTOR = "doctor"
+    PATIENT = "patient"
+    CUSTOMER = "customer"
+
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -12,6 +18,16 @@ class User(db.Model):
     password = db.Column(db.String(200), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     is_anonymous = db.Column(db.Boolean, default=False)
+
+    def to_safe_dict(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "email": self.email,
+            "full_name": self.full_name,
+            "role": self.role.value if self.role else None
+        }
+
 
 class Doctor(db.Model):
     __tablename__ = "doctors"
